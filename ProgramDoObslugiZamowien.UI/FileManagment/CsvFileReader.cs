@@ -37,10 +37,6 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
                 {
 
                 }
-                //catch
-                //{
-                //    MessageBox.Show("Problem podczas otwierania lub odczytywania danych z pliku. Sprawdź czy plik zawiera poprawne dane");
-                //}
             }        
                 return outputRequests;
         }
