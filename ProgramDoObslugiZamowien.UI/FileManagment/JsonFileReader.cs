@@ -16,8 +16,6 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
         public override List<Request> ReadAndValidateRequests()
         {
             var outputRequests = new List<Request>();
-           // try
-            //{
                 using (StreamReader file = File.OpenText(_fullFilePath))
                 {
                     JsonSerializer serializer = new JsonSerializer();
@@ -30,13 +28,6 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
                             outputRequests.Add(validatedRequest);
                     }
                 }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Problem podczas otwierania lub odczytywania danych z pliku. Sprawdź czy plik zawiera poprawne dane");
-            //}
-
-
             return outputRequests;
         }
     }
@@ -64,7 +55,5 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
                 });
             }
         }
-
-    }
-    
+    }    
 }
