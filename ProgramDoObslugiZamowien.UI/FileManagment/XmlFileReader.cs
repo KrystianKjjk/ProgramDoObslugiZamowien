@@ -21,24 +21,14 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
         public override List<Request> ReadAndValidateRequests()
         {
             var requests = new requests();
-           // try
-           // {
-                XmlSerializer serializer = new XmlSerializer(typeof(Request));
+            XmlSerializer serializer = new XmlSerializer(typeof(Request));
 
-                using (FileStream fs = File.OpenRead(_fullFilePath))
-                {
-
-                    requests = (requests)new XmlSerializer(typeof(requests)).Deserialize(fs);
-                }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Problem podczas otwierania lub odczytywania danych z pliku. Sprawdź czy plik zawiera poprawne dane");
-            //}
+            using (FileStream fs = File.OpenRead(_fullFilePath))
+            {
+                requests = (requests)new XmlSerializer(typeof(requests)).Deserialize(fs);
+            }
             return requests.ValidateDatAndMapToRequestList(requests);
         }
-
-
     }
 
     // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
