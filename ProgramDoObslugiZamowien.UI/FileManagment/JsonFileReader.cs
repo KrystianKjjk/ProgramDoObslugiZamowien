@@ -2,8 +2,6 @@
 using System.IO;
 using ProgramDoObslugiZamowien.Model;
 using Newtonsoft.Json;
-using ProgramDoObslugiZamowien.UI.Model;
-using System.Windows;
 
 namespace ProgramDoObslugiZamowien.UI.FileManagment
 {
@@ -16,18 +14,18 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
         public override List<Request> ReadAndValidateRequests()
         {
             var outputRequests = new List<Request>();
-                using (StreamReader file = File.OpenText(_fullFilePath))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    var requests = (RequestCollection)serializer.Deserialize(file, typeof(RequestCollection));
+            using (StreamReader file = File.OpenText(_fullFilePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                var requests = (RequestCollection)serializer.Deserialize(file, typeof(RequestCollection));
 
-                    foreach (var request in requests.Requests)
-                    {
-                        var validatedRequest = request.ValidateFields();
-                        if (validatedRequest != null)
-                            outputRequests.Add(validatedRequest);
-                    }
+                foreach (var request in requests.Requests)
+                {
+                    var validatedRequest = request.ValidateFields();
+                    if (validatedRequest != null)
+                        outputRequests.Add(validatedRequest);
                 }
+            }
             return outputRequests;
         }
     }
@@ -55,5 +53,7 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
                 });
             }
         }
-    }    
+
+    }
+    
 }

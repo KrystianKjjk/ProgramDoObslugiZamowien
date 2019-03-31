@@ -1,7 +1,6 @@
 ﻿using ProgramDoObslugiZamowien.Model;
-using System;
 
-namespace ProgramDoObslugiZamowien.UI.Model
+namespace ProgramDoObslugiZamowien.Model
 {
     public class RequestMap
     {

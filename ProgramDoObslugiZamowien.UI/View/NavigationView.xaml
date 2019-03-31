@@ -49,16 +49,12 @@
                               Margin="10"/>
             </ScrollViewer>
         </GroupBox>
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Button Width="100"
+        <StackPanel Grid.Row="3">
+            <Button 
                     FontSize="12"
                     Margin="5 10"
                     Content="Dodaj pliki"
-                    Command="{Binding AddFiles}"/>
-            <!--<Button Grid.Row="3" Width="80"
-                    Margin="5 10"
-                    Content="Usuń raport"
-                    Command="{Binding DeleteReport}"/>-->
+                    Command="{Binding AddFilesCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

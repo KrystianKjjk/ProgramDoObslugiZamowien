@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
-
-namespace ProgramDoObslugiZamowien.UI.ViewModel
+﻿namespace ProgramDoObslugiZamowien.UI.ViewModel
 {
     public interface INavigationViewModel
     {

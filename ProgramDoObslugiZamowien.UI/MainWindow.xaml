@@ -9,7 +9,7 @@
         Title="MainWindow" Height="764" Width="1236">
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="190"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <view:NavigationView Grid.Column="0"

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 using ProgramDoObslugiZamowien.Model;
 
 namespace ProgramDoObslugiZamowien.UI.FileManagment
@@ -21,15 +14,16 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
         public override List<Request> ReadAndValidateRequests()
         {
             var requests = new requests();
-            XmlSerializer serializer = new XmlSerializer(typeof(Request));
 
             using (FileStream fs = File.OpenRead(_fullFilePath))
             {
+
                 requests = (requests)new XmlSerializer(typeof(requests)).Deserialize(fs);
             }
-            return requests.ValidateDatAndMapToRequestList(requests);
+            return requests.ValidateDataAndMapToRequestList(requests);
         }
     }
+
     // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -38,7 +32,6 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public class requests
     {
-
         private List<requestsRequest> requestField;
 
         /// <remarks/>
@@ -54,7 +47,7 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
                 this.requestField = value;
             }
         }
-        public List<Request> ValidateDatAndMapToRequestList(requests requests)
+        public List<Request> ValidateDataAndMapToRequestList(requests requests)
         {
             var outputRequest = new List<Request>();
             foreach (var requestsRequest in requests.request)
@@ -73,9 +66,7 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
                 if (!Validate) continue;
 
                     outputRequest.Add(request);
-
             }
-
             return outputRequest;
         }
     }

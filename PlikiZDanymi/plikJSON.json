@@ -1,0 +1,32 @@
+{
+  "requests": [
+    {
+      "clientId": "1",
+      "requestId": "1",
+      "name": "Bulka kulka",
+      "quantity": "1",
+      "price": "10.50"
+    },
+    {
+      "clientId": "1",
+      "requestId": "2",
+      "name": "Chleb",
+      "quantity": "2",
+      "price": "15.00"
+    },
+    {
+      "clientId": "1",
+      "requestId": "2",
+      "name": "Chleb",
+      "quantity": "5",
+      "price": "15.00"
+    },
+    {
+      "clientId": "2",
+      "requestId": "1",
+      "name": "Ananas",
+      "quantity": "1",
+      "price": "10.00"
+    }
+  ]
+}
