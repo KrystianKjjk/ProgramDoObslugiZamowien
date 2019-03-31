@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3B0E1352-987E-450D-A32D-B75F899565E1}</ProjectGuid>
+    <ProjectGuid>{5358B410-CA4B-41A4-8217-B62F79DF85D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ProgramDoObslugiZamowien.Tests</RootNamespace>
@@ -50,14 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileDataTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDataGeneratorTests.cs" />
     <Compile Include="RequestTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProgramDoObslugiZamowien.Model\ProgramDoObslugiZamowien.Model.csproj">
