@@ -3,3 +3,12 @@
 ################################################################################
 
 /DataAccess/bin/Debug
+/.vs/ProgramDoObslugiZamowien/v15
+/DataAccess/obj/Debug
+/packages
+/ProgramDoObslugiZamowien.Model/bin/Debug
+/ProgramDoObslugiZamowien.Model/obj/Debug
+/ProgramDoObslugiZamowien.Tests/bin/Debug
+/ProgramDoObslugiZamowien.Tests/obj/Debug
+/ProgramDoObslugiZamowien.UI/bin/Debug
+/ProgramDoObslugiZamowien.UI/obj/Debug

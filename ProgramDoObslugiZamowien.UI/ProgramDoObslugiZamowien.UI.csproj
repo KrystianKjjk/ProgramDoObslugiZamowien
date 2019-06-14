@@ -79,7 +79,11 @@
     </ApplicationDefinition>
     <Compile Include="Communication\CommunicationService.cs" />
     <Compile Include="Communication\ICommunicationService.cs" />
+    <Compile Include="Communication\IMessageDialogService.cs" />
+    <Compile Include="Communication\MessageDialogService.cs" />
+    <Compile Include="DataManagment\ReportDataGenerator.cs" />
     <Compile Include="Event\OpenFileReportViewEvent.cs" />
+    <Compile Include="Event\RemoveFileEvent.cs" />
     <Compile Include="FileManagment\CsvFileReader.cs" />
     <Compile Include="FileManagment\FileData.cs" />
     <Compile Include="FileManagment\FileReader.cs" />
@@ -158,5 +162,6 @@
       <Name>ProgramDoObslugiZamowien.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

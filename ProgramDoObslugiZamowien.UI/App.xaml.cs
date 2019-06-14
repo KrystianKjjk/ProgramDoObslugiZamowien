@@ -19,14 +19,17 @@ namespace ProgramDoObslugiZamowien.UI
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            EventAggregator eventAggregator = new EventAggregator();
-            DataRepository dataRepository = new DataRepository();
+            IEventAggregator eventAggregator = new EventAggregator();
+            IMessageDialogService messageDialogService = new MessageDialogService();
+            IDataRepository dataRepository = new DataRepository();
             var mainWindow = new MainWindow(
                 new MainViewModel(
-                    new NavigationViewModel(eventAggregator, dataRepository),
+                    new NavigationViewModel(eventAggregator, dataRepository, messageDialogService),
                     dataRepository,
                     new ReportViewModel(
-                        new CommunicationService()),
+                        new CommunicationService(),
+                        eventAggregator,
+                        messageDialogService),
                     eventAggregator));
             mainWindow.Show();
         }

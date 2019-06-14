@@ -14,6 +14,6 @@
         string SumOfRequests(string clientId);
         string UnigueRequests();
         string UnigueRequests(string clientId);
-        bool ListOfData { get; }
+        bool IsListOfData { get; }
     }
 }

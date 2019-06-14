@@ -1,17 +1,13 @@
-﻿using Microsoft.Win32;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Events;
-using ProgramDoObslugiZamowien.Model;
+using ProgramDoObslugiZamowien.UI.Communication;
+using ProgramDoObslugiZamowien.UI.Event;
 using ProgramDoObslugiZamowien.UI.FileManagment;
 using ProgramDoObslugiZamowien.UI.Repository;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ProgramDoObslugiZamowien.UI.ViewModel
@@ -19,17 +15,33 @@ namespace ProgramDoObslugiZamowien.UI.ViewModel
     public class NavigationViewModel : INavigationViewModel
     {
         private IEventAggregator _eventAggregator;
+        private IMessageDialogService _messageDailogService;
         private IDataRepository _dataRepository;
-        public ObservableCollection<NavigationItemViewModel> Files { get; set; }
-        public NavigationViewModel(IEventAggregator eventAggregator, DataRepository dataRepository)
+        public NavigationViewModel(IEventAggregator eventAggregator, IDataRepository dataRepository, IMessageDialogService messageDailogService)
         {
             _eventAggregator = eventAggregator;
+            _messageDailogService=messageDailogService;
             _dataRepository = dataRepository;
             Files = new ObservableCollection<NavigationItemViewModel> ();
-            
-            AddFiles = new DelegateCommand(OnAddFiles);
-        }
+            AddFilesCommand = new DelegateCommand(OnAddFiles);
 
+            _eventAggregator.GetEvent<RemoveFileEvent>()
+                 .Subscribe(AfterFileDeleted);
+        }
+        public ObservableCollection<NavigationItemViewModel> Files { get; set; }
+        public void Load()
+        {
+
+        }
+        public ICommand AddFilesCommand { get; }
+
+        private void AfterFileDeleted(RemoveFileEventArgs args)
+        {
+            _dataRepository.RemoveData(args.FullFilePath);
+
+            NavigationItemViewModel fileItem = Files.Where(fI => fI.FullFilePath == args.FullFilePath).SingleOrDefault();
+            Files.Remove(fileItem);
+        }
         private void OnAddFiles()
         {
             string[] filePath = FileData.GetFiles();
@@ -41,48 +53,41 @@ namespace ProgramDoObslugiZamowien.UI.ViewModel
                 {
                     try
                     {
-                        var requests = GetDataFromFileAndAddToDatabase(file);
-                        if (requests.Count != 0)
-                            Files.Add(new NavigationItemViewModel(file, requests, _eventAggregator));
+                        var result = AddDataFromFileIfExistsToDatabase(file);
+                        if (result == true)
+                            Files.Add(new NavigationItemViewModel(file, _eventAggregator));
                         else
-                            MessageBox.Show("Plik nie zawiera poprawnych danych, dlatego nie został dodany");
+                            _messageDailogService.ShowInfoDialog($"Plik {file} nie zawiera poprawnych danych, dlatego nie został dodany");
                     }
-                    catch(FileFormatException Ffe)
+                    catch (FileFormatException Ffe)
                     {
-                        MessageBox.Show(Ffe.Message);
+                        //it shoudn't happend
+                        _messageDailogService.ShowInfoDialog(Ffe.Message);
                     }
                     catch (Exception)
                     {
-
-                        MessageBox.Show("Problem podczas otwierania lub odczytywania danych z pliku. Sprawdź czy plik zawiera poprawne dane");
+                        _messageDailogService.ShowInfoDialog($"Problem podczas otwierania lub odczytywania danych z pliku {file}. Sprawdź czy plik zawiera poprawne dane");
                     }    
                 }
                 else
                     errorFound = true;
             }
             if (errorFound)
-                MessageBox.Show("Co najmniej jeden z wybranych plików został już dodany lub posiada niepraidłowe rozszerzenie "); //do it better 
+                _messageDailogService.ShowInfoDialog("Co najmniej jeden z wybranych plików został już dodany lub posiada niepraidłowe rozszerzenie ");
         }
-
         private bool IsFileAlreadyAdded(string fullFilePath)
         {
             return Files.Any(f => f.FullFilePath == fullFilePath);
-        }
-
-        public void Load()
-        {
-
-        }
-
-        public ICommand AddFiles { get; set; }
-
-        private List<Request> GetDataFromFileAndAddToDatabase(string fullFilePath)
+        }        
+        private bool AddDataFromFileIfExistsToDatabase(string fullFilePath) //return true if data added to database
         {
             var requests = FileData.GetRequestsFromFile(fullFilePath);
-            if(requests.Count !=0)
+            if (requests != null && requests.Count != 0)
+            {
                 _dataRepository.AddData(fullFilePath, requests);
-            return requests;
+                return true;
+            }
+            return false;
         }
-
     }
 }

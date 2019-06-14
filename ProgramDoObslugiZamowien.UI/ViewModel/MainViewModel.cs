@@ -1,12 +1,6 @@
 ﻿using Prism.Events;
 using ProgramDoObslugiZamowien.UI.Event;
 using ProgramDoObslugiZamowien.UI.Repository;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgramDoObslugiZamowien.UI.ViewModel
 {
@@ -16,7 +10,6 @@ namespace ProgramDoObslugiZamowien.UI.ViewModel
         private IDataRepository _dataRepository;
         public INavigationViewModel NavigationViewModel { get; }
         public IReportViewModel ReportViewModel { get; private set; }
-
         public MainViewModel(INavigationViewModel navigationViewModel,  
             IDataRepository dataRepository,
             IReportViewModel reportDetailViewModel,           
@@ -29,14 +22,11 @@ namespace ProgramDoObslugiZamowien.UI.ViewModel
 
             _eventAggregator.GetEvent<OpenFileReportViewEvent>()
                 .Subscribe(AfterOpenReportDetailView);
-        }
-        
+        }        
         private void AfterOpenReportDetailView(OpenFileReportViewEventArgs args)
         {
-            ReportViewModel.Load(args.Requests);
-            
+            ReportViewModel.Load(_dataRepository.GetData(args.FullFilePath), args.FullFilePath);            
         }
-
         public void Load()
         {
             NavigationViewModel.Load();

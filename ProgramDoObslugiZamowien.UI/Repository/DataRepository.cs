@@ -1,10 +1,6 @@
 ﻿using ProgramDoObslugiZamowien.DataAccess;
 using ProgramDoObslugiZamowien.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgramDoObslugiZamowien.UI.Repository
 {
@@ -15,9 +11,18 @@ namespace ProgramDoObslugiZamowien.UI.Repository
         {
             Context = new LocalDataBase();
         }
+        public List<Request> GetData (string fullFilePath)
+        {
+            return Context.Database[fullFilePath];
+        }
         public void AddData(string fullPathName, List<Request> requests)
         {
             Context.Database.Add(fullPathName, requests);
+        }
+
+        public void RemoveData(string fullFilePath)
+        {
+            Context.Database.Remove(fullFilePath);
         }
     }
 }

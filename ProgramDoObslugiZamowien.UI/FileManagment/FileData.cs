@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
 using ProgramDoObslugiZamowien.Model;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -46,6 +45,21 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
             openfileDialog.ShowDialog();
             return openfileDialog.FileNames;
         }
+        private static string GetFileNameToSave()
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JSON files(*.json) | *.json",
+                ValidateNames = true,
+                AddExtension = true
+            };
+
+            saveFileDialog.ShowDialog();
+            string fullFilePath = saveFileDialog.FileName;
+            if (GetFileExtention(fullFilePath) != ".json")
+                fullFilePath += ".json";
+            return fullFilePath;
+        }
         public static List<Request> GetRequestsFromFile(string fullFilePath)
         {
             FileReader fileReader;
@@ -68,21 +82,6 @@ namespace ProgramDoObslugiZamowien.UI.FileManagment
             }
             List<Request> requests = fileReader.ReadAndValidateRequests();
             return requests;
-        }
-        private static string GetFileNameToSave()
-        {
-            var saveFileDialog = new SaveFileDialog
-            {
-                Filter = "JSON files(*.json) | *.json",
-                ValidateNames = true,
-                AddExtension = true
-            };
-
-            saveFileDialog.ShowDialog();
-            string fullFilePath = saveFileDialog.FileName;
-            if (GetFileExtention(fullFilePath) != ".json")
-                fullFilePath += ".json";
-            return fullFilePath;
         }
         public static void GenerateReportJSON (List<Request> requests)
         {
